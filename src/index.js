@@ -33,7 +33,7 @@
      physics:{
         default:'arcade',
         arcade:{
-             debug:false
+             debug:true
         }
      },
      scene: [SceneLoad, SceneTitle, SceneMain, SceneOver]

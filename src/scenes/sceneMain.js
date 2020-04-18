@@ -21,7 +21,7 @@ export class SceneMain extends BaseScene {
         this.makeAlignGrid(11, 11);
         //show numbers for layout and debugging 
         //
-        //this.aGrid.showNumbers();
+        this.aGrid.showNumbers();
         //
 
         this.objGroup = this.physics.add.group();
@@ -67,6 +67,7 @@ export class SceneMain extends BaseScene {
     spawnPuppy() {
         let pup = this.placeImage("face", 115, .1, true);
         pup.type = "face";
+        pup.setInteractive();
         this.objGroup.add(pup);
         pup.body.setVelocityX(100);
     }
@@ -94,6 +95,11 @@ export class SceneMain extends BaseScene {
     }
 
     clickSomething(pointer, obj) {
+
+        if (obj.type === "face") {
+            obj.setVelocityX(obj.body.velocity.x * -1);
+            return;
+        }
         let stars = new StarBurst({
             scene: this,
             x: obj.x,
