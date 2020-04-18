@@ -5,6 +5,7 @@ import {
     Align
 } from "../common/util/align";
 import {FormUtil} from "../common/util/formUtil";
+import {StarBurst} from "../common/effects/starBurst";
 //
 //
 //
@@ -20,7 +21,7 @@ export class SceneMain extends BaseScene {
         this.makeAlignGrid(11, 11);
         //show numbers for layout and debugging 
         //
-        this.aGrid.showNumbers();
+        //this.aGrid.showNumbers();
         //
 
         this.objGroup = this.physics.add.group();
@@ -47,7 +48,6 @@ export class SceneMain extends BaseScene {
         this.objGroup.children.entries.forEach(function(child) {
             if (child) {
                 if (child.type === "face") {
-                    console.log(child.x, this.gw)
                     if (child.x > (this.gw)) {
                         child.body.setVelocityX(-100);
                     }
@@ -94,6 +94,13 @@ export class SceneMain extends BaseScene {
     }
 
     clickSomething(pointer, obj) {
+        let stars = new StarBurst({
+            scene: this,
+            x: obj.x,
+            y: obj.y,
+            f: 1,
+            tint: 0xffcc00
+        });
         obj.destroy();
     }
 }
