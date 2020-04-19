@@ -1,112 +1,139 @@
-import {
-    BaseScene
-} from "./baseScene";
-import {
-    Align
-} from "../common/util/align";
-import {FormUtil} from "../common/util/formUtil";
-import {StarBurst} from "../common/effects/starBurst";
+import { BaseScene } from './baseScene';
+import { Align } from '../common/util/align';
+import { FormUtil } from '../common/util/formUtil';
+import { StarBurst } from '../common/effects/starBurst';
 //
 //
 //
 export class SceneMain extends BaseScene {
-    constructor() {
-        super('SceneMain');
-    }
-    preload() {}
-    create() {
-        //set up the base scene
-        super.create();
-        //set the grid for the scene
-        this.makeAlignGrid(11, 11);
-        //show numbers for layout and debugging 
-        //
-        this.aGrid.showNumbers();
-        //
+  constructor() {
+    super('SceneMain');
+  }
+  preload() {}
+  create() {
+    //set up the base scene
+    super.create();
+    //set the grid for the scene
+    this.makeAlignGrid(11, 11);
+    //show numbers for layout and debugging
+    //
+    this.aGrid.showNumbers();
+    //
 
-        this.objGroup = this.physics.add.group();
+    this.objGroup = this.physics.add.group();
 
-        this.spawnPuppy();
+    this.spawnPuppy();
 
-        this.spawnSomething();
-        this.time.addEvent({ 
-            delay: 1000, 
-            callback: this.spawnSomething.bind(this), 
-            loop: true });
+    this.spawnSomething();
+    this.time.addEvent({
+      delay: 1000,
+      callback: this.spawnSomething.bind(this),
+      loop: true,
+    });
 
-        window.scene = this;
-        this.input.on("gameobjectdown", this.clickSomething.bind(this));
-        this.makeUi();     
-    }
-   
-    makeUi() {
-        super.makeSoundPanel();
-        super.makeGear();
-    }
-    update() {
+    window.scene = this;
+    this.input.on('gameobjectdown', this.clickSomething.bind(this));
+    this.makeUi();
+  }
 
-        this.objGroup.children.entries.forEach(function(child) {
-            if (child) {
-                if (child.type === "face") {
-                    if (child.x > (this.gw)) {
-                        child.body.setVelocityX(-100);
-                    }
-                    if (child.x < 0) {
-                        child.body.setVelocityX(100);
-                    }
-                }
-            } 
-            else {
-                if (child.y > this.gh) {
-                    child.destroy();
-                }
-            }    
-        }.bind(this))
-    }
-
-    spawnPuppy() {
-        let pup = this.placeImage("face", 115, .1, true);
-        pup.type = "face";
-        pup.setInteractive();
-        this.objGroup.add(pup);
-        pup.body.setVelocityX(100);
-    }
-
-    spawnSomething() {
-        let pos = Phaser.Math.Between(0,10);
-        let which = Phaser.Math.Between(0,1);
-        let cfg = this.configureIt(which);
-        let obj = this.placeImage(cfg.img, pos, .1, true);
-        obj.type = cfg.img;
-        obj.setInteractive();
-        this.objGroup.add(obj);
-        obj.body.setVelocityY(cfg.velocityY);
-    }
-
-    configureIt(which) {
-        let cfg = {};
-        if (which === 0) {
-            cfg = { img: "ghost0000", velocityY: 100};
-        }
-        else {
-            cfg = { img: "glorp0000", velocityY: 50};
-        }
-        return cfg;
-    }
-
-    clickSomething(pointer, obj) {
-
-        if (obj.type === "face") {
-            obj.setVelocityX(obj.body.velocity.x * -1);
+  makeUi() {
+    super.makeSoundPanel();
+    super.makeGear();
+  }
+  update() {
+    this.objGroup.children.entries.forEach(
+      function (child) {
+        if (child) {
+          if (child.type === 'face') {
+            if (child.x > this.gw) {
+              child.body.setVelocityX(-100);
+            }
+            if (child.x < 0) {
+              child.body.setVelocityX(100);
+            }
             return;
+          }
+          if (child.type === "plant") {
+            if (child.y < this.gh && child.y > this.bottomY && child.body.velocity.y != 0) {
+                child.body.y = this.bottomY;
+                child.body.setVelocityX(0);
+                return;
+            }
         }
-        let stars = new StarBurst({
-            scene: this,
-            x: obj.x,
-            y: obj.y,
-            f: 1,
-            tint: 0xffcc00
-        });
-        obj.destroy();
+        if (child.y > this.gh) {
+              child.destroy();
+            }
+        }
+      }.bind(this)
+    );
+  }
+
+  spawnPuppy() {
+    let pup = this.placeImage('face', 115, 0.1, true);
+    this.bottomY = pup.y;
+    pup.type = 'face';
+    pup.setInteractive();
+    this.objGroup.add(pup);
+    pup.body.setVelocityX(100);
+  }
+
+  spawnSomething() {
+    let pos = Phaser.Math.Between(0, 10);
+    let which = Phaser.Math.Between(0, 2);
+    let cfg = this.configureIt(which);
+    let obj = this.placeImage(cfg.img, pos, 0.1, true);
+    obj.type = cfg.img;
+    obj.hp = cfg.hp;
+    obj.cfg = cfg;
+    obj.setInteractive();
+    this.objGroup.add(obj);
+    obj.body.setVelocityY(cfg.velocityY);
+  }
+
+  configureIt(which) {
+    let cfg = {};
+    if (which === 0) {
+      cfg = {
+        img: 'ghost0000',
+        velocityY: 100,
+        hp: -1,
+        hit: function () {
+          console.log('hit!', this.hp);
+        },
+      };
     }
+    if (which === 1) {
+      cfg = { img: 'plant', velocityY: 50, hp: 1 };
+    }
+    if (which === 2) {
+      cfg = { img: 'glorp0000', velocityY: 75, hp: 2 };
+    }
+    return cfg;
+  }
+
+  clickSomething(pointer, obj) {
+    if (obj.type === 'face') {
+      obj.setVelocityX(obj.body.velocity.x * -1);
+      return;
+    }
+
+    if (obj.hp > 0) {
+      obj.hp = obj.hp - 1;
+    }
+
+    if (obj.hp === 0) {
+      let stars = new StarBurst({
+        scene: this,
+        x: obj.x,
+        y: obj.y,
+        f: 1,
+        tint: 0xffcc00,
+      });
+      obj.destroy();
+    } else {
+      if (obj.cfg.hit) {
+        obj.cfg.hit();
+      }
+    }
+  }
 }
