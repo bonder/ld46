@@ -25,17 +25,25 @@ export class SceneMain extends BaseScene {
     this.createWalkAnimation("glorp", 7);
     this.createWalkAnimation("puppy", 7);
 
+    this.enemies = ['ghost', 'plant', 'glorp'];
     
+    this.configureWaves();
+    this.currentWave = 1;
+
     this.objGroup = this.physics.add.group();
 
     this.spawnPuppy();
 
-    this.spawnSomething();
+    console.log("Total enemies:",this.waves[this.currentWave-1].total_enemies);
+
+    //this.spawnSomething();
+    
     this.time.addEvent({
-      delay: 1000,
-      callback: this.spawnSomething.bind(this),
-      loop: true,
+        delay: this.waves[this.currentWave-1].spawnRate,
+        callback: this.spawnSomething.bind(this),
+        repeat: this.waves[this.currentWave-1].total_enemies-1
     });
+
 
     window.scene = this;
     this.input.on('gameobjectdown', this.clickSomething.bind(this));
@@ -46,6 +54,18 @@ export class SceneMain extends BaseScene {
     super.makeSoundPanel();
     super.makeGear();
   }
+
+  configureWaves() {
+    this.waves =
+        [
+            { total_enemies: 3, 
+              tip: "Plants take 1 hit. Don't let them touch puppy!",
+              spawnRate: 3000,
+              table: ["plant", "glorp"]
+            }
+        ]
+  }
+
   update() {
     this.objGroup.children.entries.forEach(
       function (child) {
@@ -87,7 +107,9 @@ export class SceneMain extends BaseScene {
 
   spawnSomething() {
     let pos = Phaser.Math.Between(0, 10);
-    let which = Phaser.Math.Between(0, 2);
+    let howMany = this.waves[this.currentWave-1].table.length;
+    console.log("How many to choose from:", howMany-1);
+    let which = this.waves[this.currentWave-1].table[Phaser.Math.Between(0, howMany-1)];
     let cfg = this.configureIt(which);
     let obj = this.placeImage(cfg.img, pos, 0.1, true);
     obj.type = cfg.img;
@@ -100,7 +122,7 @@ export class SceneMain extends BaseScene {
 
   configureIt(which) {
     let cfg = {};
-    if (which === 0) {
+    if (which === "ghost") {
       cfg = {
         img: 'ghost',
         velocityY: 100,
@@ -111,10 +133,10 @@ export class SceneMain extends BaseScene {
         },
       };
     }
-    if (which === 1) {
+    if (which === "plant") {
       cfg = { img: 'plant', velocityY: 50, hp: 1 };
     }
-    if (which === 2) {
+    if (which === "glorp") {
       cfg = { img: 'glorp', velocityY: 75, hp: 2 };
     }
     return cfg;
