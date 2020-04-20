@@ -53,7 +53,7 @@ export class SceneLoad extends BaseScene {
         //
         //game png
         //
-        let pngArray = ['panelBack','title','face', 'puppy_peril', 'get_ready', 'wave_survived', 'game_over_screen'];
+        let pngArray = ['panelBack','title','tile_background', 'puppy_peril', 'get_ready', 'wave_survived', 'game_over_screen'];
         for (let i = 0; i < pngArray.length; i++) {
             this.loadPng(pngArray[i], this.imagePath);
         }

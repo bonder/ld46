@@ -25,6 +25,8 @@ export class SceneMain extends BaseScene {
     this.currentWave = 0;
     this.enemiesLeft = this.waves[this.currentWave].total_enemies;
 
+    this.setBackground('tile_background');
+
     this.objGroup = this.physics.add.group();
 
     this.spawnPuppy();

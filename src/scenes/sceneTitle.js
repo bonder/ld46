@@ -23,7 +23,7 @@ export class SceneTitle extends BaseScene {
         // uncomment to turn on music
         // this.mm.setBackgroundMusic("backgroundMusic");
         //
-        this.setBackground('sky');
+        this.setBackground('tile_background');
         //
         //
         this.makeAlignGrid(11, 11);
