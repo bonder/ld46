@@ -109,7 +109,17 @@ export class SceneMain extends BaseScene {
   }
 
   showWaveSurvived() {
-    this.getReady = this.placeImage("wave_survived", 60, .5, false);
+    this.waveSurvived = this.placeImage("wave_survived", 60, .5, false);
+    this.time.addEvent({
+      delay: this.waves[this.currentWave-1].spawnRate,
+      callback: this.hideWaveSurvived.bind(this),
+      loop: false
+  });
+  }
+
+  hideWaveSurvived() {
+    this.waveSurvived.destroy();
+
   }
 
   spawnPuppy() {
