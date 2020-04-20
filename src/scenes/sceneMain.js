@@ -69,7 +69,7 @@ export class SceneMain extends BaseScene {
             { total_enemies: 3, 
               tip: "Plants take 1 hit. Don't let them touch puppy!",
               spawnRate: 3000,
-              table: ["plant", "glorp"]
+              table: ["plant"]
             }
         ]
   }
@@ -118,6 +118,7 @@ export class SceneMain extends BaseScene {
     pup.setInteractive();
     this.objGroup.add(pup);
     pup.body.setVelocityX(100);
+    pup.setSize(16,16, true);
     this.physics.add.overlap(pup, this.objGroup, this.gameOver, null, this);
   }
 
