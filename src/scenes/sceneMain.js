@@ -20,6 +20,17 @@ export class SceneMain extends BaseScene {
     this.aGrid.showNumbers();
     //
 
+    // Load animations
+    let ghostwalk = this.anims.create({
+        key: 'ghostwalk',
+        frames: this.anims.generateFrameNumbers('ghost'),
+        frameRate: 7,
+        repeat: -1
+    });
+    ghostwalk.removeFrameAt(8);
+
+    console.log("ghostwalk", ghostwalk);
+
     this.objGroup = this.physics.add.group();
 
     this.spawnPuppy();
@@ -94,11 +105,12 @@ export class SceneMain extends BaseScene {
     let cfg = {};
     if (which === 0) {
       cfg = {
-        img: 'ghost0000',
+        img: 'ghost',
         velocityY: 100,
         hp: -1,
         hit: function () {
           console.log('hit!', this.hp);
+          console.log("frame", this.frame)
         },
       };
     }

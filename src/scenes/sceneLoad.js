@@ -53,10 +53,14 @@ export class SceneLoad extends BaseScene {
         //
         //game png
         //
-        let pngArray = ['panelBack','title','face', 'ghost0000', 'glorp0000', 'plant'];
+        let pngArray = ['panelBack','title','face', 'glorp0000', 'plant'];
         for (let i = 0; i < pngArray.length; i++) {
             this.loadPng(pngArray[i], this.imagePath);
         }
+
+        this.load.spritesheet('ghost', this.imagePath + 'ghost_new_sheet.png', 
+            { frameWidth: 32, frameHeight: 32 });
+
         //
         //game jpg
         //
@@ -151,5 +155,6 @@ export class SceneLoad extends BaseScene {
         }
         this.load.audio(key, mainPath + key + ".mp3");
     }
+
     update() {}
 }

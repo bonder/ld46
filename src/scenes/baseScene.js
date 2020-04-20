@@ -73,11 +73,16 @@ export class BaseScene extends Phaser.Scene {
     //
     placeImage(key, pos, scale, physics = false) {
         let image
-        if (physics == false) {
-            image = this.add.sprite(0, 0, key);
+        if (physics === false) {
+            image = this.add.sprite(0, 0, key, 0);
         } else {
-            image = this.physics.add.sprite(0, 0, key);
+            image = this.physics.add.sprite(0, 0, key, 0);
         }
+        if (key === "ghost") {
+            image.anims.load(key+'walk', 0);
+            image.anims.play(key+'walk');
+        }
+        
         if (isNaN(pos)) {
             this.aGrid.placeAt(pos.x, pos.y, image);
         } else {
