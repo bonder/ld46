@@ -91,8 +91,7 @@ export class SceneMain extends BaseScene {
             }
         }
         if (child.y > this.gh) {
-              child.destroy();
-              console.log(this.sb);
+              this.removeSomething(child);
               if (this.sb.model.score === 0) {
                   this.gameOver()
               }
@@ -144,7 +143,7 @@ export class SceneMain extends BaseScene {
     }
     let pos = Phaser.Math.Between(0, 10);
     let howMany = this.waves[this.currentWave].table.length;
-    console.log("How many to choose from:", howMany-1);
+    console.log("How many to choose from:", howMany);
     let which = this.waves[this.currentWave].table[Phaser.Math.Between(0, howMany-1)];
     let cfg = this.configureIt(which);
     let obj = this.placeImage(cfg.img, pos, 0.1, true);
