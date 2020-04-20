@@ -20,8 +20,6 @@ export class SceneMain extends BaseScene {
     this.createWalkAnimation("glorp", 7);
     this.createWalkAnimation("skull", 7)
     this.createWalkAnimation("puppy", 7);
-
-    this.enemies = ['ghost', 'plant', 'glorp'];
     
     this.configureWaves();
     this.currentWave = 0;
@@ -57,45 +55,59 @@ export class SceneMain extends BaseScene {
     this.waves =
         [
             { total_enemies: 3, 
-              tip: "Plants take root. Tap to pull the weeds!",
+              tip1: "Plants take root.",
+              tip2: "Tap to pull the weeds!",
               spawnRate: 2000,
               table: ["plant"]
             },
             { total_enemies: 3,
-              tip: "Glorps are tough. Tap them twice!",
+              tip1: "Glorps are tough.",
+              tip2: "Tap them twice!",
               spawnRate: 2000,
               table: ["glorp"]
             },
             { total_enemies: 3,
-              tip: "Skulls are wicked fast!",
+              tip1: "Skulls are wicked fast.",
+              tip2: "Tap them if you can!",
               spawnRate: 2000,
               table: ["skull"]
             },
             {
               total_enemies: 3,
-              tip: "Ghosts are invincible. Puppy must avoid!",
+              tip1: "Ghosts are invincible.",
+              tip2: "Puppy can only avoid!",
               spawnRate: 2000,
               table: ["ghost"]
             },
             { total_enemies: 10,
-              tip: "Okay, here we go!",
+              tip1: "Okay, here we go...",
+              tip2: "It's a monster mash!",
               spawnRate: 2500,
               table: ["plant", "glorp", "ghost", "skull"]
             },
             { total_enemies: 10,
-              tip: "Okay, here we go!",
+              tip1: "Survived that?",
+              tip2: "A little bit faster, then...",
               spawnRate: 2000,
               table: ["plant", "glorp", "ghost", "skull"]
             },
-            { total_enemies: 10,
-              tip: "Okay, here we go!",
+            { total_enemies: 20,
+              tip1: "Oh, you're still here!",
+              tip2: "Let's add a little heat...",
               spawnRate: 1500,
-              table: ["plant", "glorp", "ghost", "skull"]
+              table: ["plant", "glorp", "ghost", "skull", "skull",]
             },
             { total_enemies: 10,
-              tip: "Okay, here we go!",
-              spawnRate: 1000,
-              table: ["plant", "glorp", "ghost"]
+              tip1: "How about a...",
+              tip2: "SKULL STORM!",
+              spawnRate: 500,
+              table: ["skull"]
+            },
+            { total_enemies: 25,
+              tip1: "Okay, that was unfair.",
+              tip2: "Back to 'normal.'",
+              spawnRate: 750,
+              table: ["plant", "glorp", "ghost", "skull"]
             }
         ]
   }
@@ -138,10 +150,15 @@ export class SceneMain extends BaseScene {
 
   showGetReady() {
     this.getReady = this.placeImage("get_ready", 49, .5, false);
+
+    this.waveTip1 = this.placeText(this.waves[this.currentWave].tip1, 60, "mystyle");
+    this.waveTip2 = this.placeText(this.waves[this.currentWave].tip2, 82, "mystyle");
    }
 
   hideGetReady() {
     this.getReady.destroy();
+    this.waveTip1.destroy();
+    this.waveTip2.destroy();
   }
 
   showWaveSurvived() {
@@ -248,12 +265,13 @@ export class SceneMain extends BaseScene {
   }
 
   startNextWave() {
-    this.showGetReady();
-
     if (this.currentWave < this.waves.length-1) {
       this.currentWave++;
     }
+    this.showGetReady();
 
+
+    console.log(this.waves[this.currentwave]);
     this.enemiesLeft = this.waves[this.currentWave].total_enemies;
 
     this.time.addEvent({
