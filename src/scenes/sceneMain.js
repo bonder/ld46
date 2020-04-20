@@ -144,11 +144,9 @@ export class SceneMain extends BaseScene {
         }
         if (child.y > this.gh) {
               this.removeSomething(child);
-              if (this.sb.model.score === 0) {
+              this.emitter.emit("UP_POINTS", -1);
+              if (this.sb.model.score < 0) {
                   this.gameOver()
-              }
-              else {
-                this.emitter.emit("UP_POINTS", -1);
               }
             }
         }
