@@ -308,6 +308,8 @@ export class SceneMain extends BaseScene {
 
   gameOver() {
     this.mm.playSound("whimper");
+    window.localStorage.setItem('score', this.sb.model.score);
+    console.log("score", this.sb.model.score, "ls", window.localStorage.getItem("score"));
     this.scene.start("SceneOver");
   }
 

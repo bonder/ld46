@@ -33,6 +33,7 @@ import { ScoreBox } from "../common/comps/scoreBox";
 export class BaseScene extends Phaser.Scene {
     constructor(key) {
         super(key);
+        this.score = 0;
     }
     preload() {}
     create() {
@@ -157,7 +158,7 @@ export class BaseScene extends Phaser.Scene {
         this.soundPanel.depth = 2000;
     }
 
-    makeScoreBox() {
+    makeScoreBox(score = 0) {
         this.sb = new ScoreBox({
             scene: this
         });
@@ -165,7 +166,7 @@ export class BaseScene extends Phaser.Scene {
         //
         //set the score
         //
-        this.emitter.emit("SET_SCORE", 0);
+        this.emitter.emit("SET_SCORE", score);
     }
     //
     //open or close the sound panel

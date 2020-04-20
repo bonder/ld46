@@ -50,6 +50,9 @@ export class SceneOver extends BaseScene {
     makeUi() {
         super.makeSoundPanel();
         super.makeGear();
+
+        let score = window.localStorage.getItem('score');
+        this.scoreText = this.placeText("SCORE: " + score, 2, "SCORE");
     }
     playAgain() {
         this.scene.start("SceneMain");
