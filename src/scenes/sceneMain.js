@@ -57,13 +57,24 @@ export class SceneMain extends BaseScene {
         [
             { total_enemies: 3, 
               tip: "Plants take root. Tap to pull the weeds!",
-              spawnRate: 3000,
+              spawnRate: 2000,
               table: ["plant"]
             },
             { total_enemies: 3,
               tip: "Glorps are tough. Tap them twice!",
-              spawnRate: 3000,
+              spawnRate: 2000,
               table: ["glorp"]
+            },
+            {
+              total_enemies: 3,
+              tip: "Ghosts are invincible. Puppy must avoid!",
+              spawnRate: 2000,
+              table: ["ghost"]
+            },
+            { total_enemies: 10,
+              tip: "Okay, here we go!",
+              spawnRate: 2500,
+              table: ["plant", "glorp", "ghost"]
             }
         ]
   }
@@ -143,7 +154,6 @@ export class SceneMain extends BaseScene {
     }
     let pos = Phaser.Math.Between(0, 10);
     let howMany = this.waves[this.currentWave].table.length;
-    console.log("How many to choose from:", howMany);
     let which = this.waves[this.currentWave].table[Phaser.Math.Between(0, howMany-1)];
     let cfg = this.configureIt(which);
     let obj = this.placeImage(cfg.img, pos, 0.1, true);
