@@ -2,7 +2,7 @@ import { BaseScene } from './baseScene';
 import { Align } from '../common/util/align';
 import { FormUtil } from '../common/util/formUtil';
 import { StarBurst } from '../common/effects/starBurst';
-import { ScoreBox } from "../common/comps/scoreBox";
+
 //
 //
 //
@@ -14,21 +14,11 @@ export class SceneMain extends BaseScene {
   create() {
     //set up the base scene
     super.create();
-    //set the grid for the scene
-    this.makeAlignGrid(11, 11);
-    //show numbers for layout and debugging
-    //
-    this.aGrid.showNumbers();
-    //
 
-    this.sb = new ScoreBox({
-        scene: this
-    });
-    this.placeAtIndex(2, this.sb);
-    //
-    //set the score
-    //
-    this.emitter.emit("SET_SCORE", 0);
+
+
+
+
 
     this.createWalkAnimation("plant", 7);
     this.createWalkAnimation("ghost", 7);
@@ -61,6 +51,7 @@ export class SceneMain extends BaseScene {
   makeUi() {
     super.makeSoundPanel();
     super.makeGear();
+    super.makeScoreBox();
   }
 
   configureWaves() {
@@ -118,8 +109,8 @@ export class SceneMain extends BaseScene {
     pup.setInteractive();
     this.objGroup.add(pup);
     pup.body.setVelocityX(100);
-    pup.setSize(16,16, true);
-    this.physics.add.overlap(pup, this.objGroup, this.gameOver, null, this);
+    pup.setSize(8,8, true);
+    this.physics.add.collider(pup, this.objGroup, this.gameOver, null, this);
   }
 
   spawnSomething() {
@@ -135,6 +126,7 @@ export class SceneMain extends BaseScene {
     obj.setInteractive();
     this.objGroup.add(obj);
     obj.body.setVelocityY(cfg.velocityY);
+    obj.setSize(24,24,true);
   }
 
   configureIt(which) {

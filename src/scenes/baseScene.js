@@ -28,6 +28,8 @@ import {
 import {
     MediaManager
 } from "../common/util/mediaManager";
+import { ScoreBox } from "../common/comps/scoreBox";
+
 export class BaseScene extends Phaser.Scene {
     constructor(key) {
         super(key);
@@ -57,6 +59,11 @@ export class BaseScene extends Phaser.Scene {
         this.textStyles = TextStyles.getInstance(this.sys.game.config.width);
         this.gw = this.sys.game.config.width;
         this.gh = this.sys.game.config.height;
+
+        this.makeAlignGrid(11, 11);
+        if (this.sys.game.config.physics.arcade.debug) {
+            this.aGrid.showNumbers();
+        }
     }
     //
     //set a background image
@@ -148,6 +155,17 @@ export class BaseScene extends Phaser.Scene {
         Align.center(this.soundPanel, this);
         this.soundPanel.visible = false;
         this.soundPanel.depth = 2000;
+    }
+
+    makeScoreBox() {
+        this.sb = new ScoreBox({
+            scene: this
+        });
+        this.placeAtIndex(2, this.sb);
+        //
+        //set the score
+        //
+        this.emitter.emit("SET_SCORE", 0);
     }
     //
     //open or close the sound panel
