@@ -46,9 +46,6 @@ export class SceneMain extends BaseScene {
 
     console.log("Total enemies:",this.waves[this.currentWave-1].total_enemies);
 
-    //this.spawnSomething();
-    
-
     this.time.addEvent({
         delay: this.waves[this.currentWave-1].spawnRate,
         callback: this.spawnSomething.bind(this),
@@ -121,6 +118,7 @@ export class SceneMain extends BaseScene {
     pup.setInteractive();
     this.objGroup.add(pup);
     pup.body.setVelocityX(100);
+    this.physics.add.overlap(pup, this.objGroup, this.gameOver, null, this);
   }
 
   spawnSomething() {
