@@ -119,7 +119,7 @@ export class SceneMain extends BaseScene {
 
   hideWaveSurvived() {
     this.waveSurvived.destroy();
-
+    this.startNextWave();
   }
 
   spawnPuppy() {
@@ -209,6 +209,19 @@ export class SceneMain extends BaseScene {
     if (this.enemiesLeft === 0) {
       this.showWaveSurvived();
     }
+  }
+
+  startNextWave() {
+    this.showGetReady();
+
+    this.enemiesLeft = this.waves[this.currentWave-1].total_enemies;
+    
+    this.time.addEvent({
+      delay: this.waves[this.currentWave-1].spawnRate,
+      callback: this.spawnSomething.bind(this),
+      repeat: this.waves[this.currentWave-1].total_enemies-1
+  });
+
   }
 
   createWalkAnimation(sheetName, framesPerSecond, MaxFrames) {
