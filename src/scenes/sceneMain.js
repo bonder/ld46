@@ -2,6 +2,7 @@ import { BaseScene } from './baseScene';
 import { Align } from '../common/util/align';
 import { FormUtil } from '../common/util/formUtil';
 import { StarBurst } from '../common/effects/starBurst';
+import { ScoreBox } from "../common/comps/scoreBox";
 //
 //
 //
@@ -19,6 +20,15 @@ export class SceneMain extends BaseScene {
     //
     this.aGrid.showNumbers();
     //
+
+    this.sb = new ScoreBox({
+        scene: this
+    });
+    this.placeAtIndex(2, this.sb);
+    //
+    //set the score
+    //
+    this.emitter.emit("SET_SCORE", 0);
 
     this.createWalkAnimation("plant", 7);
     this.createWalkAnimation("ghost", 7);
@@ -161,6 +171,7 @@ export class SceneMain extends BaseScene {
         f: 1,
         tint: 0xffcc00,
       });
+      this.emitter.emit("UP_POINTS", 1);
       obj.destroy();
     } else {
       if (obj.cfg.hit) {

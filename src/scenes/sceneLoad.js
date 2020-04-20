@@ -53,7 +53,7 @@ export class SceneLoad extends BaseScene {
         //
         //game png
         //
-        let pngArray = ['panelBack','title','face'];
+        let pngArray = ['panelBack','title','face', 'puppy_peril'];
         for (let i = 0; i < pngArray.length; i++) {
             this.loadPng(pngArray[i], this.imagePath);
         }
@@ -62,7 +62,7 @@ export class SceneLoad extends BaseScene {
         this.loadSpritesheet('plant', 'plant_new_sheet.png');
         this.loadSpritesheet('glorp', 'glorp_hmmm.png');
         this.loadSpritesheet('puppy', 'cute_dog_new_sheet.png');
-        
+
         // this.load.spritesheet('ghost', this.imagePath + 'ghost_new_sheet.png', 
         //     { frameWidth: 32, frameHeight: 32 });
 
