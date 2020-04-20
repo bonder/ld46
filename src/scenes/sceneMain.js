@@ -75,7 +75,7 @@ export class SceneMain extends BaseScene {
             {
               total_enemies: 3,
               tip1: "Ghosts are invincible.",
-              tip2: "Puppy can only avoid!",
+              tip2: "Tap Puppy to avoid!",
               spawnRate: 2000,
               table: ["ghost"]
             },
@@ -92,7 +92,7 @@ export class SceneMain extends BaseScene {
               table: ["plant", "glorp", "ghost", "skull"]
             },
             { total_enemies: 20,
-              tip1: "Oh, you're still here!",
+              tip1: "Oh, you're still here?",
               tip2: "Let's add a little heat...",
               spawnRate: 1500,
               table: ["plant", "glorp", "ghost", "skull", "skull",]
@@ -107,6 +107,12 @@ export class SceneMain extends BaseScene {
               tip1: "Okay, that was unfair.",
               tip2: "Back to 'normal.'",
               spawnRate: 750,
+              table: ["plant", "glorp", "ghost", "skull"]
+            },
+            { total_enemies: 25,
+              tip1: "",
+              tip2: "'",
+              spawnRate: 500,
               table: ["plant", "glorp", "ghost", "skull"]
             }
         ]
