@@ -61,6 +61,7 @@ export class SceneLoad extends BaseScene {
         this.loadSpritesheet('ghost', 'ghost_new_sheet.png');
         this.loadSpritesheet('plant', 'plant_new_sheet.png');
         this.loadSpritesheet('glorp', 'glorp_hmmm.png');
+        this.loadSpritesheet('skull', 'skull_new_sheet.png');
         this.loadSpritesheet('puppy', 'cute_dog_new_sheet.png');
 
         // this.load.spritesheet('ghost', this.imagePath + 'ghost_new_sheet.png', 
