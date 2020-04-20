@@ -18,6 +18,7 @@ export class SceneMain extends BaseScene {
     this.createWalkAnimation("plant", 7);
     this.createWalkAnimation("ghost", 7);
     this.createWalkAnimation("glorp", 7);
+    this.createWalkAnimation("skull", 7)
     this.createWalkAnimation("puppy", 7);
 
     this.enemies = ['ghost', 'plant', 'glorp'];
@@ -65,6 +66,11 @@ export class SceneMain extends BaseScene {
               spawnRate: 2000,
               table: ["glorp"]
             },
+            { total_enemies: 3,
+              tip: "Skulls are wicked fast!",
+              spawnRate: 2000,
+              table: ["skull"]
+            },
             {
               total_enemies: 3,
               tip: "Ghosts are invincible. Puppy must avoid!",
@@ -74,6 +80,21 @@ export class SceneMain extends BaseScene {
             { total_enemies: 10,
               tip: "Okay, here we go!",
               spawnRate: 2500,
+              table: ["plant", "glorp", "ghost", "skull"]
+            },
+            { total_enemies: 10,
+              tip: "Okay, here we go!",
+              spawnRate: 2000,
+              table: ["plant", "glorp", "ghost", "skull"]
+            },
+            { total_enemies: 10,
+              tip: "Okay, here we go!",
+              spawnRate: 1500,
+              table: ["plant", "glorp", "ghost", "skull"]
+            },
+            { total_enemies: 10,
+              tip: "Okay, here we go!",
+              spawnRate: 1000,
               table: ["plant", "glorp", "ghost"]
             }
         ]
@@ -174,8 +195,6 @@ export class SceneMain extends BaseScene {
         velocityY: 100,
         hp: -1,
         hit: function () {
-          console.log('hit!', this.hp);
-          console.log("frame", this.frame)
         },
       };
     }
@@ -184,6 +203,9 @@ export class SceneMain extends BaseScene {
     }
     if (which === "glorp") {
       cfg = { img: 'glorp', velocityY: 75, hp: 2 };
+    }
+    if (which === "skull") {
+      cfg = { img: "skull", velocityY: 200, hp: 1};
     }
     return cfg;
   }
@@ -250,7 +272,7 @@ export class SceneMain extends BaseScene {
         repeat: -1
     });
 
-    if (sheetName === "ghost" || sheetName === "glorp") {
+    if (sheetName === "ghost" || sheetName === "glorp" || sheetName === "skull") {
         walk.removeFrameAt(8);
     }
   }
