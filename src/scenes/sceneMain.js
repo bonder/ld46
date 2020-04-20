@@ -169,6 +169,7 @@ export class SceneMain extends BaseScene {
 
   showWaveSurvived() {
     this.waveSurvived = this.placeImage("wave_survived", 60, .5, false);
+    this.mm.playSound("PUPPY2");
     this.time.addEvent({
       delay: this.waves[this.currentWave].spawnRate,
       callback: this.hideWaveSurvived.bind(this),
@@ -190,6 +191,7 @@ export class SceneMain extends BaseScene {
     pup.body.setVelocityX(100);
     pup.setSize(8,8, true);
     this.physics.add.collider(pup, this.objGroup, this.gameOver, null, this);
+    this.mm.playSound("PUPPY2");
   }
 
   spawnSomething() {
@@ -237,6 +239,7 @@ export class SceneMain extends BaseScene {
     if (obj.type === 'puppy') {
       obj.setVelocityX(obj.body.velocity.x * -1);
       obj.flipX = !obj.flipX;
+      this.mm.playSound("s11");
       return;
     }
 
@@ -275,7 +278,7 @@ export class SceneMain extends BaseScene {
       this.currentWave++;
     }
     this.showGetReady();
-
+    this.mm.playSound("PUPPY2");
 
     console.log(this.waves[this.currentwave]);
     this.enemiesLeft = this.waves[this.currentWave].total_enemies;
@@ -302,6 +305,7 @@ export class SceneMain extends BaseScene {
   }
 
   gameOver() {
+    this.mm.playSound("whimper");
     this.scene.start("SceneOver");
   }
 

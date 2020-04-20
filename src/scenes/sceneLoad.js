@@ -63,9 +63,7 @@ export class SceneLoad extends BaseScene {
         this.loadSpritesheet('glorp', 'glorp_hmmm.png');
         this.loadSpritesheet('skull', 'skull_new_sheet.png');
         this.loadSpritesheet('puppy', 'cute_dog_new_sheet.png');
-
-        // this.load.spritesheet('ghost', this.imagePath + 'ghost_new_sheet.png', 
-        //     { frameWidth: 32, frameHeight: 32 });
+        this.loadSpritesheet('floor', 'tile_set_new_sheet.png');
 
         //
         //game jpg
@@ -77,7 +75,7 @@ export class SceneLoad extends BaseScene {
         //
         //game wav
         //
-        let wavArray = [];
+        let wavArray = ['PUPPY2', 's11', 'whimper'];
         for (let i = 0; i < wavArray.length; i++) {
             this.loadWav(wavArray[i], this.audioPath);
         }
