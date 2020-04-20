@@ -21,7 +21,7 @@ export class SceneTitle extends BaseScene {
         //
         //
         // uncomment to turn on music
-        // this.mm.setBackgroundMusic("backgroundMusic");
+        this.mm.setBackgroundMusic("ludam_dare_better_maybe");
         //
         this.setBackground('tile_background');
         //
