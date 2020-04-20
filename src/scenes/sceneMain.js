@@ -20,17 +20,12 @@ export class SceneMain extends BaseScene {
     this.aGrid.showNumbers();
     //
 
-    // Load animations
-    let ghostwalk = this.anims.create({
-        key: 'ghostwalk',
-        frames: this.anims.generateFrameNumbers('ghost'),
-        frameRate: 7,
-        repeat: -1
-    });
-    ghostwalk.removeFrameAt(8);
+    this.createWalkAnimation("plant", 7);
+    this.createWalkAnimation("ghost", 7);
+    this.createWalkAnimation("glorp", 7);
+    this.createWalkAnimation("puppy", 7);
 
-    console.log("ghostwalk", ghostwalk);
-
+    
     this.objGroup = this.physics.add.group();
 
     this.spawnPuppy();
@@ -55,12 +50,14 @@ export class SceneMain extends BaseScene {
     this.objGroup.children.entries.forEach(
       function (child) {
         if (child) {
-          if (child.type === 'face') {
+          if (child.type === 'puppy') {
             if (child.x > this.gw) {
               child.body.setVelocityX(-100);
+              child.flipX = true;
             }
             if (child.x < 0) {
               child.body.setVelocityX(100);
+              child.flipX = false;
             }
             return;
           }
@@ -80,9 +77,9 @@ export class SceneMain extends BaseScene {
   }
 
   spawnPuppy() {
-    let pup = this.placeImage('face', 115, 0.1, true);
+    let pup = this.placeImage('puppy', 115, 0.1, true);
     this.bottomY = pup.y;
-    pup.type = 'face';
+    pup.type = 'puppy';
     pup.setInteractive();
     this.objGroup.add(pup);
     pup.body.setVelocityX(100);
@@ -118,13 +115,13 @@ export class SceneMain extends BaseScene {
       cfg = { img: 'plant', velocityY: 50, hp: 1 };
     }
     if (which === 2) {
-      cfg = { img: 'glorp0000', velocityY: 75, hp: 2 };
+      cfg = { img: 'glorp', velocityY: 75, hp: 2 };
     }
     return cfg;
   }
 
   clickSomething(pointer, obj) {
-    if (obj.type === 'face') {
+    if (obj.type === 'puppy') {
       obj.setVelocityX(obj.body.velocity.x * -1);
       return;
     }
@@ -148,4 +145,18 @@ export class SceneMain extends BaseScene {
       }
     }
   }
+
+  createWalkAnimation(sheetName, framesPerSecond, MaxFrames) {
+    let walk = this.anims.create({
+        key: sheetName+'walk',
+        frames: this.anims.generateFrameNumbers(sheetName),
+        frameRate: framesPerSecond,
+        repeat: -1
+    });
+
+    if (sheetName === "ghost" || sheetName === "glorp") {
+        walk.removeFrameAt(8);
+    }
+  }
+
 }

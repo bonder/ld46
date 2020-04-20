@@ -78,7 +78,7 @@ export class BaseScene extends Phaser.Scene {
         } else {
             image = this.physics.add.sprite(0, 0, key, 0);
         }
-        if (key === "ghost") {
+        if (key === "plant" || key === "ghost" || key === "glorp" || key === "puppy") {
             image.anims.load(key+'walk', 0);
             image.anims.play(key+'walk');
         }

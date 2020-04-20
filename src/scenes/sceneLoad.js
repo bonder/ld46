@@ -53,13 +53,18 @@ export class SceneLoad extends BaseScene {
         //
         //game png
         //
-        let pngArray = ['panelBack','title','face', 'glorp0000', 'plant'];
+        let pngArray = ['panelBack','title','face'];
         for (let i = 0; i < pngArray.length; i++) {
             this.loadPng(pngArray[i], this.imagePath);
         }
 
-        this.load.spritesheet('ghost', this.imagePath + 'ghost_new_sheet.png', 
-            { frameWidth: 32, frameHeight: 32 });
+        this.loadSpritesheet('ghost', 'ghost_new_sheet.png');
+        this.loadSpritesheet('plant', 'plant_new_sheet.png');
+        this.loadSpritesheet('glorp', 'glorp_hmmm.png');
+        this.loadSpritesheet('puppy', 'cute_dog_new_sheet.png');
+        
+        // this.load.spritesheet('ghost', this.imagePath + 'ghost_new_sheet.png', 
+        //     { frameWidth: 32, frameHeight: 32 });
 
         //
         //game jpg
@@ -154,6 +159,11 @@ export class SceneLoad extends BaseScene {
             mainPath = this.audioPath;
         }
         this.load.audio(key, mainPath + key + ".mp3");
+    }
+
+    loadSpritesheet(key, fileName) {
+        this.load.spritesheet(key, this.imagePath + fileName, 
+            { frameWidth: 32, frameHeight: 32 });
     }
 
     update() {}
