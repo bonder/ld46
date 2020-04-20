@@ -25,7 +25,7 @@ export class SceneOver extends BaseScene {
         //
         //
         //  this.placeImage('title', 27, .8);
-        this.placeText("Game Title", 27, "TITLE_TEXT");
+        this.placeImage("game_over_screen", 60, .75, false);
         //
         //
         //
