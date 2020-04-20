@@ -48,6 +48,7 @@ export class SceneMain extends BaseScene {
 
     //this.spawnSomething();
     
+
     this.time.addEvent({
         delay: this.waves[this.currentWave-1].spawnRate,
         callback: this.spawnSomething.bind(this),
@@ -100,6 +101,13 @@ export class SceneMain extends BaseScene {
         }
         if (child.y > this.gh) {
               child.destroy();
+              console.log(this.sb);
+              if (this.sb.model.score === 0) {
+                  this.gameOver()
+              }
+              else {
+                this.emitter.emit("UP_POINTS", -1);
+              }
             }
         }
       }.bind(this)
@@ -191,6 +199,10 @@ export class SceneMain extends BaseScene {
     if (sheetName === "ghost" || sheetName === "glorp") {
         walk.removeFrameAt(8);
     }
+  }
+
+  gameOver() {
+    this.scene.start("SceneOver");
   }
 
 }
