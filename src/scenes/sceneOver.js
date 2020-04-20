@@ -38,6 +38,9 @@ export class SceneOver extends BaseScene {
             callback: this.playAgain.bind(this)
         });
         this.aGrid.placeAtIndex(104, btnNext);
+        
+        this.mm.background.stop();
+        this.mm.setBackgroundMusic("game_over_song");
         //
         //
         //
@@ -55,6 +58,8 @@ export class SceneOver extends BaseScene {
         this.scoreText = this.placeText("SCORE: " + score, 2, "SCORE");
     }
     playAgain() {
+        this.mm.background.stop();
+        this.mm.setBackgroundMusic("ludam_dare_better_maybe");
         this.scene.start("SceneMain");
     }
     update() {}

@@ -73,7 +73,7 @@ export class SceneLoad extends BaseScene {
         //
         //game wav
         //
-        let wavArray = ['PUPPY2', 's11', 'whimper', 'ludam_dare_better_maybe'];
+        let wavArray = ['PUPPY2', 's11', 'whimper', 'ludam_dare_better_maybe', 'game_over_song'];
         for (let i = 0; i < wavArray.length; i++) {
             this.loadWav(wavArray[i], this.audioPath);
         }
