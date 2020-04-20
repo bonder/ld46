@@ -32,7 +32,8 @@ export class SceneTitle extends BaseScene {
         //
         //
       //  this.placeImage('title', 27, .8);
-        this.placeText("Game Title",27,"TITLE_TEXT");
+
+        this.placeImage("puppy_peril", 38, .5, false);
         //
         //
         //
