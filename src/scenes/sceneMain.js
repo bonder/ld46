@@ -15,11 +15,6 @@ export class SceneMain extends BaseScene {
     //set up the base scene
     super.create();
 
-
-
-
-
-
     this.createWalkAnimation("plant", 7);
     this.createWalkAnimation("ghost", 7);
     this.createWalkAnimation("glorp", 7);
@@ -29,12 +24,15 @@ export class SceneMain extends BaseScene {
     
     this.configureWaves();
     this.currentWave = 1;
+    this.enemiesLeft = this.waves[this.currentWave-1].total_enemies;
 
     this.objGroup = this.physics.add.group();
 
     this.spawnPuppy();
 
     console.log("Total enemies:",this.waves[this.currentWave-1].total_enemies);
+
+    this.showGetReady();
 
     this.time.addEvent({
         delay: this.waves[this.currentWave-1].spawnRate,
@@ -102,6 +100,18 @@ export class SceneMain extends BaseScene {
     );
   }
 
+  showGetReady() {
+    this.getReady = this.placeImage("get_ready", 49, .5, false);
+   }
+
+  hideGetReady() {
+    this.getReady.destroy();
+  }
+
+  showWaveSurvived() {
+    this.getReady = this.placeImage("wave_survived", 60, .5, false);
+  }
+
   spawnPuppy() {
     let pup = this.placeImage('puppy', 115, 0.1, true);
     this.bottomY = pup.y;
@@ -114,6 +124,9 @@ export class SceneMain extends BaseScene {
   }
 
   spawnSomething() {
+    if (this.getReady) {
+      this.hideGetReady();
+    }
     let pos = Phaser.Math.Between(0, 10);
     let howMany = this.waves[this.currentWave-1].table.length;
     console.log("How many to choose from:", howMany-1);
@@ -171,11 +184,20 @@ export class SceneMain extends BaseScene {
         tint: 0xffcc00,
       });
       this.emitter.emit("UP_POINTS", 1);
-      obj.destroy();
+      this.removeSomething(obj);
+
     } else {
       if (obj.cfg.hit) {
         obj.cfg.hit();
       }
+    }
+  }
+
+  removeSomething(obj) {
+    obj.destroy();
+    this.enemiesLeft--;
+    if (this.enemiesLeft === 0) {
+      this.showWaveSurvived();
     }
   }
 
