@@ -23,21 +23,21 @@ export class SceneMain extends BaseScene {
     this.enemies = ['ghost', 'plant', 'glorp'];
     
     this.configureWaves();
-    this.currentWave = 1;
-    this.enemiesLeft = this.waves[this.currentWave-1].total_enemies;
+    this.currentWave = 0;
+    this.enemiesLeft = this.waves[this.currentWave].total_enemies;
 
     this.objGroup = this.physics.add.group();
 
     this.spawnPuppy();
 
-    console.log("Total enemies:",this.waves[this.currentWave-1].total_enemies);
+    console.log("Total enemies:",this.waves[this.currentWave].total_enemies);
 
     this.showGetReady();
 
     this.time.addEvent({
-        delay: this.waves[this.currentWave-1].spawnRate,
+        delay: this.waves[this.currentWave].spawnRate,
         callback: this.spawnSomething.bind(this),
-        repeat: this.waves[this.currentWave-1].total_enemies-1
+        repeat: this.waves[this.currentWave].total_enemies-1
     });
 
 
@@ -56,9 +56,14 @@ export class SceneMain extends BaseScene {
     this.waves =
         [
             { total_enemies: 3, 
-              tip: "Plants take 1 hit. Don't let them touch puppy!",
+              tip: "Plants take root. Tap to pull the weeds!",
               spawnRate: 3000,
               table: ["plant"]
+            },
+            { total_enemies: 3,
+              tip: "Glorps are tough. Tap them twice!",
+              spawnRate: 3000,
+              table: ["glorp"]
             }
         ]
   }
@@ -111,7 +116,7 @@ export class SceneMain extends BaseScene {
   showWaveSurvived() {
     this.waveSurvived = this.placeImage("wave_survived", 60, .5, false);
     this.time.addEvent({
-      delay: this.waves[this.currentWave-1].spawnRate,
+      delay: this.waves[this.currentWave].spawnRate,
       callback: this.hideWaveSurvived.bind(this),
       loop: false
   });
@@ -138,9 +143,9 @@ export class SceneMain extends BaseScene {
       this.hideGetReady();
     }
     let pos = Phaser.Math.Between(0, 10);
-    let howMany = this.waves[this.currentWave-1].table.length;
+    let howMany = this.waves[this.currentWave].table.length;
     console.log("How many to choose from:", howMany-1);
-    let which = this.waves[this.currentWave-1].table[Phaser.Math.Between(0, howMany-1)];
+    let which = this.waves[this.currentWave].table[Phaser.Math.Between(0, howMany-1)];
     let cfg = this.configureIt(which);
     let obj = this.placeImage(cfg.img, pos, 0.1, true);
     obj.type = cfg.img;
@@ -214,12 +219,16 @@ export class SceneMain extends BaseScene {
   startNextWave() {
     this.showGetReady();
 
-    this.enemiesLeft = this.waves[this.currentWave-1].total_enemies;
-    
+    if (this.currentWave < this.waves.length-1) {
+      this.currentWave++;
+    }
+
+    this.enemiesLeft = this.waves[this.currentWave].total_enemies;
+
     this.time.addEvent({
-      delay: this.waves[this.currentWave-1].spawnRate,
+      delay: this.waves[this.currentWave].spawnRate,
       callback: this.spawnSomething.bind(this),
-      repeat: this.waves[this.currentWave-1].total_enemies-1
+      repeat: this.waves[this.currentWave].total_enemies-1
   });
 
   }
