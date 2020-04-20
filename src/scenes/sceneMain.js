@@ -123,6 +123,7 @@ export class SceneMain extends BaseScene {
   clickSomething(pointer, obj) {
     if (obj.type === 'puppy') {
       obj.setVelocityX(obj.body.velocity.x * -1);
+      obj.flipX = !obj.flipX;
       return;
     }
 
