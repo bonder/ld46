@@ -12,20 +12,24 @@ export class SceneMain extends BaseScene {
   }
   preload() {
     super.preload();
+    console.log('main preload');
   }
-  
+
   create() {
     //set up the base scene
     super.create();
 
+    console.log('main create');
+
     this.createWalkAnimation("plant", 7);
     this.createWalkAnimation("ghost", 7);
     this.createWalkAnimation("glorp", 7);
-    this.createWalkAnimation("skull", 7)
+    this.createWalkAnimation("skull", 7);
     this.createWalkAnimation("puppy", 7);
     
     this.configureWaves();
     this.currentWave = 0;
+    console.log("currentWave:", this.currentWave);
     this.enemiesLeft = this.waves[this.currentWave].total_enemies;
 
     this.setBackground('tile_background');
@@ -120,7 +124,7 @@ export class SceneMain extends BaseScene {
               spawnRate: 500,
               table: ["plant", "glorp", "ghost", "skull"]
             }
-        ]
+        ];
   }
 
   update() {
@@ -148,8 +152,9 @@ export class SceneMain extends BaseScene {
         if (child.y > this.gh) {
               this.removeSomething(child);
               this.emitter.emit("UP_POINTS", -1);
-              if (this.sb.model.score < 0) {
-                  this.gameOver()
+              if (this.enemiesLeft < this.waves[this.currentWave].total_enemies 
+                && this.sb.model.score < 0) {
+                  this.gameOver();
               }
             }
         }
