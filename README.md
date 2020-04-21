@@ -1,3 +1,5 @@
+This game was written in Phaser 3.18 using the free Ultimate Game Parts template from PhaserGames.com.
+
 This version of the ultimate game parts template was built upon the phaser 3 project template by Richard Davey
 
 
