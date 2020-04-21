@@ -59,8 +59,8 @@ export class SceneOver extends BaseScene {
     }
     playAgain() {
         this.mm.background.stop();
-        //this.mm.setBackgroundMusic("ludam_dare_better_maybe");
-        this.scene.start('SceneTitle');
+        this.mm.setBackgroundMusic("ludam_dare_better_maybe");
+        this.scene.start('SceneMain');
     }
     update() {}
 }

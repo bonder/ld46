@@ -38,16 +38,17 @@ export class SceneMain extends BaseScene {
 
     this.spawnPuppy();
 
-    console.log("Total enemies:",this.waves[this.currentWave].total_enemies);
+    console.log("Total enemies:",this.waves[this.currentWave].total_enemies,
+      "Spawn rate:",this.waves[this.currentWave].spawnRate,
+      "Current wave:", this.currentWave);
 
     this.showGetReady();
 
-    this.time.addEvent({
+    this.timer1 = this.time.addEvent({
         delay: this.waves[this.currentWave].spawnRate,
         callback: this.spawnSomething.bind(this),
         repeat: this.waves[this.currentWave].total_enemies-1
     });
-
 
     window.scene = this;
     this.input.on('gameobjectdown', this.clickSomething.bind(this));
@@ -151,6 +152,7 @@ export class SceneMain extends BaseScene {
         }
         if (child.y > this.gh) {
               this.removeSomething(child);
+              console.log("Something removed:", child.type)
               this.emitter.emit("UP_POINTS", -1);
               if (this.enemiesLeft < this.waves[this.currentWave].total_enemies 
                 && this.sb.model.score < 0) {
@@ -163,6 +165,7 @@ export class SceneMain extends BaseScene {
   }
 
   showGetReady() {
+    console.log("Get Ready!");
     this.getReady = this.placeImage("get_ready", 49, .5, false);
 
     this.waveTip1 = this.placeText(this.waves[this.currentWave].tip1, 60, "mystyle");
@@ -178,8 +181,10 @@ export class SceneMain extends BaseScene {
   showWaveSurvived() {
     this.waveSurvived = this.placeImage("wave_survived", 60, .5, false);
     this.mm.playSound("PUPPY2");
+    let spawnRate = this.waves[this.currentWave].spawnRate;
+    console.log("Spawn rate:", spawnRate);
     this.time.addEvent({
-      delay: this.waves[this.currentWave].spawnRate,
+      delay: spawnRate,
       callback: this.hideWaveSurvived.bind(this),
       loop: false
   });
@@ -191,6 +196,7 @@ export class SceneMain extends BaseScene {
   }
 
   spawnPuppy() {
+    console.log("Spawn Puppy!");
     let pup = this.placeImage('puppy', 115, 0.1, true);
     this.bottomY = pup.y;
     pup.type = 'puppy';
@@ -203,6 +209,7 @@ export class SceneMain extends BaseScene {
   }
 
   spawnSomething() {
+    console.log("Spawn something!");
     if (this.getReady) {
       this.hideGetReady();
     }
@@ -291,7 +298,7 @@ export class SceneMain extends BaseScene {
     console.log(this.waves[this.currentwave]);
     this.enemiesLeft = this.waves[this.currentWave].total_enemies;
 
-    this.time.addEvent({
+    this.timer3 = this.time.addEvent({
       delay: this.waves[this.currentWave].spawnRate,
       callback: this.spawnSomething.bind(this),
       repeat: this.waves[this.currentWave].total_enemies-1
@@ -313,8 +320,13 @@ export class SceneMain extends BaseScene {
   }
 
   gameOver() {
+    if (this.timer1) this.timer1.remove(false);
+    //if (this.timer2) this.timer2.remove(false);
+    if (this.timer3) this.timer3.remove(false);
+    //this.events.removeAllListeners();
     this.mm.playSound("whimper");
     window.localStorage.setItem('score', this.sb.model.score);
+    this.sb.destroy();
     console.log("score", this.sb.model.score, "ls", window.localStorage.getItem("score"));
     this.scene.switch("SceneOver");
   }
