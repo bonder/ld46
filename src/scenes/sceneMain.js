@@ -10,7 +10,10 @@ export class SceneMain extends BaseScene {
   constructor() {
     super('SceneMain');
   }
-  preload() {}
+  preload() {
+    super.preload();
+  }
+  
   create() {
     //set up the base scene
     super.create();
@@ -308,7 +311,7 @@ export class SceneMain extends BaseScene {
     this.mm.playSound("whimper");
     window.localStorage.setItem('score', this.sb.model.score);
     console.log("score", this.sb.model.score, "ls", window.localStorage.getItem("score"));
-    this.scene.start("SceneOver");
+    this.scene.switch("SceneOver");
   }
 
 }
